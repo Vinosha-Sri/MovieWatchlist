@@ -4,45 +4,39 @@ const bodyParser = require("body-parser");
 const methodOverride = require("method-override");
 
 const app = express();
-const Assignment = require("./models/assignment");
-
+const Movie = require("./models/movie");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(methodOverride("_method"));
 app.set("view engine", "ejs");
-mongoose.connect("mongodb://localhost:27017/assignment_tracker", {
+mongoose.connect("mongodb://localhost:27017/movie_watchlist", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
 app.get("/", async (req, res) => {
-  const assignments = await Assignment.find();
-  res.render("index", { assignments });
+  const movies = await Movie.find();
+  res.render("index", { movies });
 });
-
-app.get("/assignments/new", (req, res) => {
+app.get("/movies/new", (req, res) => {
   res.render("new");
 });
-app.post("/assignments", async (req, res) => {
-  await Assignment.create(req.body.assignment);
+app.post("/movies", async (req, res) => {
+  await Movie.create(req.body.movie);
   res.redirect("/");
 });
-
-app.get("/assignments/:id/edit", async (req, res) => {
-  const assignment = await Assignment.findById(req.params.id);
-  res.render("edit", { assignment });
+app.get("/movies/:id/edit", async (req, res) => {
+  const movie = await Movie.findById(req.params.id);
+  res.render("edit", { movie });
 });
-
-app.put("/assignments/:id", async (req, res) => {
-  await Assignment.findByIdAndUpdate(req.params.id, req.body.assignment);
+app.put("/movies/:id", async (req, res) => {
+  await Movie.findByIdAndUpdate(req.params.id, req.body.movie);
   res.redirect("/");
 });
-
-app.delete("/assignments/:id", async (req, res) => {
-  await Assignment.findByIdAndDelete(req.params.id);
+app.delete("/movies/:id", async (req, res) => {
+  await Movie.findByIdAndDelete(req.params.id);
   res.redirect("/");
 });
-
 app.listen(3000, () => {
   console.log("Server is running on http://localhost:3000");
 });
