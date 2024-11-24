@@ -1,0 +1,95 @@
+<!-- Stylesheets -->
+<link rel="stylesheet" href="/Content/app.css" />
+<link rel="stylesheet" href="/Content/phone.css" />
+<link rel="stylesheet" href="/Content/tablet.css" />
+<link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/@fortawesome/fontawesome-free/css/all.min.css" />
+<link rel="stylesheet" href="/Content/Tablet-mode.css" type="text/css" media="only screen and (min-width:481px) and (max-width:1099px)">
+<link rel="stylesheet" href="/Content/Phone-Mode.css" type="text/css" media="only screen and (max-width:480px)">
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"><i class="fa-solid fa-film"></i> Movie Watchlist</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a id="len1" class="hoverable nav-link nav-link-clicked" href="/home">
+            <i class="fa-solid fa-house"></i> Home
+          </a>
+        </li>
+        <li class="nav-item">
+          <a id="len2" class="hoverable nav-link nav-link-clicked" href="/about">
+            <i class="fa-solid fa-info-circle"></i> About
+          </a>
+        </li>
+        <li class="nav-item">
+          <a id="len3" class="hoverable nav-link nav-link-clicked" href="/movies">
+            <i class="fa-solid fa-list"></i> Movie List
+          </a>
+        </li>
+        <li class="nav-item">
+          <a id="len4" class="hoverable nav-link nav-link-clicked" href="/movies/add">
+            <i class="fa-solid fa-plus"></i> Add Movie
+          </a>
+        </li>
+        <li class="nav-item">
+          <a id="len5" class="hoverable nav-link nav-link-clicked" href="/contact">
+            <i class="fa-solid fa-address-book"></i> Contact
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Add Movie Form -->
+<div class="container">
+  <div class="row">
+    <div class="offset-md-3 col-md-6">
+      <h1><%= title %></h1>
+
+      <form class="form" method="POST">
+        <div class="form-group">
+          <label for="titleTextField">Movie Title</label>
+          <input type="text" class="form-control" id="titleTextField" placeholder="Enter the Movie Title" name="title" required>
+        </div>
+
+        <div class="form-group">
+          <label for="genreTextField">Genre</label>
+          <input type="text" class="form-control" id="genreTextField" placeholder="Enter the Movie Genre" name="genre" required>
+        </div>
+
+        <div class="form-group">
+          <label for="yearTextField">Release Year</label>
+          <input type="number" class="form-control" id="yearTextField" placeholder="Enter the Release Year (e.g., 2023)" name="year" required>
+        </div>
+
+        <div class="form-group">
+          <label for="statusSelect">Status</label>
+          <select class="form-control" id="statusSelect" name="status" required>
+            <option value="Watched">Watched</option>
+            <option value="Not Watched">Not Watched</option>
+          </select>
+        </div>
+
+        <button class="btn btn-primary" type="submit">
+          <i class="fas fa-edit"></i> Submit
+        </button>
+        <a href="/movies" class="btn btn-warning">
+          <i class="fas fa-undo"></i> Cancel
+        </a>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Script Files -->
+<script src="/Scripts/app.js"></script>
+<script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/jquery/dist/jquery.min.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
