@@ -1,42 +1,43 @@
 const express = require("express");
+const expressLayouts = require("express-ejs-layouts");
 const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
-const methodOverride = require("method-override");
 
-const app = express();
-const Movie = require("./models/movie");
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static("public"));
-app.use(methodOverride("_method"));
+const app = express(); // Initialize Express
+
+// Middleware
+app.use(expressLayouts); // Use express-ejs-layouts
+app.use(express.static("public")); // Serve static files from 'public' folder
+app.use(express.urlencoded({ extended: true })); // Parse form data
+
+// Set View Engine
 app.set("view engine", "ejs");
+app.set("layout", "layout"); // Set default layout
+
+// Database Connection
 mongoose.connect("mongodb://localhost:27017/movie_watchlist", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
+// Model
+const Movie = mongoose.model("Movie", {
+  title: String,
+  genre: String,
+  year: Number,
+  status: String,
+});
+
+// Routes
 app.get("/", async (req, res) => {
   const movies = await Movie.find();
-  res.render("index", { movies });
+  res.render("index", { movies }); // Render 'index.ejs' content within 'layout.ejs'
 });
+
 app.get("/movies/new", (req, res) => {
-  res.render("new");
+  res.render("addmovie"); // Render 'addmovie.ejs'
 });
-app.post("/movies", async (req, res) => {
-  await Movie.create(req.body.movie);
-  res.redirect("/");
-});
-app.get("/movies/:id/edit", async (req, res) => {
-  const movie = await Movie.findById(req.params.id);
-  res.render("edit", { movie });
-});
-app.put("/movies/:id", async (req, res) => {
-  await Movie.findByIdAndUpdate(req.params.id, req.body.movie);
-  res.redirect("/");
-});
-app.delete("/movies/:id", async (req, res) => {
-  await Movie.findByIdAndDelete(req.params.id);
-  res.redirect("/");
-});
+
+// Start Server
 app.listen(3000, () => {
   console.log("Server is running on http://localhost:3000");
 });
