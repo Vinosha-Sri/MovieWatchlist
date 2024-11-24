@@ -1,31 +1,52 @@
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
 const mongoose = require("mongoose");
+require("dotenv").config(); // Load environment variables
 
-const app = express(); // Initialize Express
+// Debugging: Log the MongoDB URI to verify it is being loaded correctly
+console.log("MongoDB URI:", process.env.MONGODB_URI);
+
+const connectDB = require("./config/database"); 
+const app = express(); 
 
 // Middleware
-app.use(expressLayouts); // Use express-ejs-layouts
-app.use(express.static("public")); // Serve static files from 'public' folder
-app.use(express.urlencoded({ extended: true })); // Parse form data
+app.use(expressLayouts); 
+app.use(express.static("public")); 
+app.use(express.urlencoded({ extended: true }));
 
-// Set View Engine
+// View Engine
 app.set("view engine", "ejs");
-app.set("layout", "layout"); // Set default layout
+app.set("layout", "layout"); 
 
-// Database Connection
-mongoose.connect("mongodb://localhost:27017/movie_watchlist", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+// Connect to MongoDB
+connectDB();
 
-// Model
+// Define the Movie model
 const Movie = mongoose.model("Movie", {
   title: String,
   genre: String,
   year: Number,
   status: String,
 });
+
+// Insert a sample movie
+const createSampleMovie = async () => {
+  try {
+    const sampleMovie = new Movie({
+      title: "Inception",
+      genre: "Sci-Fi",
+      year: 2010,
+      status: "Watched",
+    });
+    await sampleMovie.save();
+    console.log("Sample movie added to the database!");
+  } catch (err) {
+    console.error("Error adding sample movie:", err.message);
+  }
+};
+
+// Call the function to insert a sample movie
+createSampleMovie();
 
 // Routes
 app.get("/", async (req, res) => {
@@ -37,7 +58,7 @@ app.get("/movies/new", (req, res) => {
   res.render("addmovie"); // Render 'addmovie.ejs'
 });
 
-// Start Server
+// Start the server
 app.listen(3000, () => {
   console.log("Server is running on http://localhost:3000");
 });
