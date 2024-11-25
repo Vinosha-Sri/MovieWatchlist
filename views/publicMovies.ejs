@@ -1,31 +1,51 @@
 <%- include('partials/header') %>
-
+<!-- Includes the shared header template. -->
 <div class="container">
   <h1>Public Movie List</h1>
+  <!-- Displays the heading for the public movie list. -->
   <% if (movies.length > 0) { %>
+    <!-- Checks if there are any movies in the "movies" array. -->
     <table>
+      <!-- Creates a table to display the movie list -->
       <thead>
+        <!-- Table header -->
         <tr>
+          <!-- Table row for column headers -->
           <th>Title</th>
+          <!-- Column header for movie title -->
           <th>Genre</th>
+          <!-- Column header for movie genre -->
           <th>Year</th>
+          <!-- Column header for movie release year -->
           <th>Status</th>
+          <!-- Column header for movie status (e.g., Watched/Not Watched) -->
         </tr>
       </thead>
       <tbody>
+        <!-- Table body to display movie data -->
         <% movies.forEach(movie => { %>
+          <!-- Loops through the "movies" array and dynamically generates table rows for each movie -->
           <tr>
+            <!-- Table row for a single movie -->
             <td><%= movie.title %></td>
+            <!-- Displays the title of the movie -->
             <td><%= movie.genre %></td>
+            <!-- Displays the genre of the movie -->
             <td><%= movie.year %></td>
+            <!-- Displays the release year of the movie -->
             <td><%= movie.status %></td>
+            <!-- Displays the status of the movie (e.g., Watched/Not Watched) -->
           </tr>
         <% }); %>
+        <!-- Ends the loop through the "movies" array -->
       </tbody>
     </table>
   <% } else { %>
+    <!-- Executes this block if there are no movies in the "movies" array -->
     <p>No movies found in the collection.</p>
+    <!-- Displays a message indicating that no movies are available -->
   <% } %>
 </div>
-
+<!-- Ends the main container for the content -->
 <%- include('partials/footer') %>
+<!-- Includes the shared footer. -->

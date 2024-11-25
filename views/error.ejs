@@ -3,12 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Adjusts the page to different screen sizes -->
     <title>Error</title>
+    <!-- Error title for the page -->
 </head>
 <body>
     <h1>An Error Occurred</h1>
+    <!-- Displays a heading to indicate an error occurred. -->
     <p><%= message %></p>
+    <!-- Displays the error message dynamically passed from the server. -->
     <p><%= error.status %></p>
+    <!-- Displays the HTTP status code of the error. -->
     <pre><%= error.stack %></pre>
+    <!-- Displays the error stack trace for debugging purposes. -->
 </body>
 </html>

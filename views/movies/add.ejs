@@ -1,40 +1,84 @@
-<%- include('partials/header') %>
-
+<%- include('../partials/header') %> 
+<!-- Includes the shared header -->
 <!-- Add Movie Form -->
 <div class="container">
+  <!-- Bootstrap container class for responsive layout -->
   <div class="row">
+    <!-- Bootstrap row for layout structure -->
     <div class="offset-md-3 col-md-6">
+      <!-- Offsets the form to center it on medium-sized screens -->
       <h1><%= title %></h1>
-
+      <!-- Displays the page title dynamically passed from the server-->
       <form class="form" method="POST">
+        <!-- Forms element with post method to send data to the server -->
         <div class="form-group">
+          <!-- Forms group for proper spacing and alignment -->
           <label for="titleTextField">Movie Title</label>
-          <input type="text" class="form-control" id="titleTextField" placeholder="Enter the Movie Title" name="title" required>
+          <!-- Label for the title input field -->
+          <input 
+            type="text" 
+            class="form-control" 
+            id="titleTextField" 
+            placeholder="Enter the Movie Title" 
+            name="title" 
+            required
+          >
+          <!-- Text input field for entering the movie title -->
         </div>
 
         <div class="form-group">
           <label for="genreTextField">Genre</label>
-          <input type="text" class="form-control" id="genreTextField" placeholder="Enter the Movie Genre" name="genre" required>
+          <!-- Label for the genre input field -->
+          <input 
+            type="text" 
+            class="form-control" 
+            id="genreTextField" 
+            placeholder="Enter the Movie Genre" 
+            name="genre" 
+            required
+          >
+          <!-- Text input field for entering the movie genre -->
         </div>
 
         <div class="form-group">
           <label for="yearTextField">Release Year</label>
-          <input type="number" class="form-control" id="yearTextField" placeholder="Enter the Release Year (e.g., 2023)" name="year" required>
+          <!-- Label for the year input field -->
+          <input 
+            type="number" 
+            class="form-control" 
+            id="yearTextField" 
+            placeholder="Enter the Release Year (e.g., 2023)" 
+            name="year" 
+            required
+          >
+          <!-- Number input field for entering the movie's release year -->
         </div>
 
         <div class="form-group">
           <label for="statusSelect">Status</label>
-          <select class="form-control" id="statusSelect" name="status" required>
+          <!-- Label for the status dropdown -->
+          <select 
+            class="form-control" 
+            id="statusSelect" 
+            name="status" 
+            required
+          >
+            <!-- Dropdown to select the movie status -->
             <option value="Watched">Watched</option>
+            <!-- Option for "Watched" -->
             <option value="Not Watched">Not Watched</option>
+            <!-- Option for "Not Watched"-->
           </select>
         </div>
 
         <button class="btn btn-primary" type="submit">Submit</button>
+        <!-- Submit button to save the movie -->
         <a href="/movies" class="btn btn-warning">Cancel</a>
+        <!-- Link to navigate back to the movies list without submitting -->
       </form>
     </div>
   </div>
 </div>
 
-<%- include('partials/footer') %>
+<%- include('../partials/footer') %> 
+<!-- Includes the shared footer partial -->

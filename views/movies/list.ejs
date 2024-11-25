@@ -1,34 +1,64 @@
-<%- include('partials/header') %>
-
+<%- include('../partials/header') %> 
+<!-- Includes the shared header. -->
 <main class="container">
+  <!-- Main container for the content. -->
   <div class="row">
+    <!-- Bootstrap row for layout structure. -->
     <div class="offset-md-1 col-md-10">
+      <!-- Centers the content. -->
       <h1><%= title %></h1>
+      <!-- Displays the dynamic title passed from the server. -->
       <a href="/movies/add" class="btn btn-primary" role="button">Add Movie</a>
+      <!-- Button that navigates to the Add Movie page. -->
       <br>
       <table class="table table-bordered table-striped table-hover">
         <thead>
+          <!-- Table header -->
           <tr class="d-flex">
+            <!-- Flexbox layout for responsive table. -->
             <th class="text-center col-3">Title</th>
+            <!-- Column for the movie title. -->
             <th class="text-center col-2">Genre</th>
+            <!-- Column for the movie genre. -->
             <th class="text-center col-2">Year</th>
+            <!-- Column for the movie's release year. -->
             <th class="text-center col-2">Status</th>
+            <!-- Column for the movie's watch status. -->
             <th class="text-center col-1">Edit</th>
+            <!-- Column for the edit button. -->
             <th class="text-center col-1">Delete</th>
+            <!-- Column for the delete button. -->
           </tr>
         </thead>
         <tbody>
+          <!-- Table body where the list of movies is rendered dynamically. -->
           <% for(let count=0; count<MovieList.length; count++) { %>
+          <!-- Loops through the MovieList array to render each movie. -->
           <tr class="d-flex">
+            <!-- Flexbox layout for table rows. -->
             <td class="text-center col-3"><%= MovieList[count].title %></td>
+            <!-- Displays the title of the current movie. -->
             <td class="text-center col-2"><%= MovieList[count].genre %></td>
+            <!-- Displays the genre of the current movie -->
             <td class="text-center col-2"><%= MovieList[count].year %></td>
+            <!-- Displays the release year of the current movie -->
             <td class="text-center col-2"><%= MovieList[count].status %></td>
+            <!-- Displays the watch status of the current movie -->
             <td class="text-center col-1">
-              <a href="/movies/edit/<%= MovieList[count]._id %>" class="btn btn-primary btn-sm">Edit</a>
+              <a href="/movies/edit/<%= MovieList[count]._id %>" 
+                 class="btn btn-primary btn-sm">
+                Edit
+              </a>
+              <!-- Edit button that links to the Edit Movie page for the current movie -->
             </td>
             <td class="text-center col-1">
-              <a href="/movies/delete/<%= MovieList[count]._id %>" class="btn btn-danger btn-sm">Delete</a>
+              <a href="/movies/delete/<%= MovieList[count]._id %>" 
+                 class="btn btn-danger btn-sm"
+                 onclick="return confirmDelete();">
+                Delete
+              </a>
+              <!-- Delete button that links to the Delete route for the current movie.
+                   Includes an onclick event to confirm the deletion. -->
             </td>
           </tr>
           <% } %>
@@ -38,4 +68,12 @@
   </div>
 </main>
 
-<%- include('partials/footer') %>
+<script>
+  function confirmDelete() {
+    return confirm("Are you sure you want to delete this movie?");
+    // Displays a confirmation dialog; returns true if the user clicks "OK," false otherwise.
+  }
+</script>
+
+<%- include('../partials/footer') %> 
+<!-- Includes the shared footer. -->

@@ -1,6 +1,4 @@
-var express = require('express');
-var router = express.Router();
-let Movie = require('../models/movie'); // Movie model
+const Movie = require('../models/movie'); // Movie model
 
 // Display Movie List
 module.exports.DisplayMovieList = async (req, res, next) => {
@@ -12,30 +10,24 @@ module.exports.DisplayMovieList = async (req, res, next) => {
     });
   } catch (err) {
     console.error(err);
-    res.render('movies/list', {
-      error: 'Error on server',
+    res.render('error', {
+      message: 'Error fetching movie list',
+      error: err,
     });
   }
 };
 
 // Display Add Movie Page
 module.exports.AddMovie = (req, res, next) => {
-  try {
-    res.render('movies/add', {
-      title: 'Add Movie',
-    });
-  } catch (err) {
-    console.error(err);
-    res.render('movies/list', {
-      error: 'Error on the server',
-    });
-  }
+  res.render('movies/add', {
+    title: 'Add Movie',
+  });
 };
 
 // Process Adding a Movie
 module.exports.ProcessAddMovie = async (req, res, next) => {
   try {
-    let newMovie = new Movie({
+    const newMovie = new Movie({
       title: req.body.title,
       genre: req.body.genre,
       year: req.body.year,
@@ -45,8 +37,9 @@ module.exports.ProcessAddMovie = async (req, res, next) => {
     res.redirect('/movies');
   } catch (err) {
     console.error(err);
-    res.render('movies/list', {
-      error: 'Error on the server',
+    res.render('error', {
+      message: 'Error adding movie',
+      error: err,
     });
   }
 };
@@ -62,8 +55,9 @@ module.exports.EditMovie = async (req, res, next) => {
     });
   } catch (err) {
     console.error(err);
-    res.render('movies/list', {
-      error: 'Error on the server',
+    res.render('error', {
+      message: 'Error fetching movie for edit',
+      error: err,
     });
   }
 };
@@ -72,7 +66,7 @@ module.exports.EditMovie = async (req, res, next) => {
 module.exports.ProcessEditMovie = async (req, res, next) => {
   try {
     const id = req.params.id; // Get movie ID from the route
-    let updatedMovie = {
+    const updatedMovie = {
       title: req.body.title,
       genre: req.body.genre,
       year: req.body.year,
@@ -82,8 +76,9 @@ module.exports.ProcessEditMovie = async (req, res, next) => {
     res.redirect('/movies');
   } catch (err) {
     console.error(err);
-    res.render('movies/list', {
-      error: 'Error on the server',
+    res.render('error', {
+      message: 'Error updating movie',
+      error: err,
     });
   }
 };
@@ -92,24 +87,27 @@ module.exports.ProcessEditMovie = async (req, res, next) => {
 module.exports.DeleteMovie = async (req, res, next) => {
   try {
     const id = req.params.id; // Get movie ID from the route
-    await Movie.deleteOne({ _id: id }); // Delete the movie from the database
+    await Movie.findByIdAndDelete(id); // Delete the movie from the database
     res.redirect('/movies');
   } catch (err) {
     console.error(err);
-    res.render('movies/list', {
-      error: 'Error on the server',
+    res.render('error', {
+      message: 'Error deleting movie',
+      error: err,
     });
   }
 };
 
-const Movie = require('../models/movie');
-
+// List All Movies for Public Page
 module.exports.listAllMovies = async (req, res, next) => {
   try {
     const movies = await Movie.find(); // Fetch all movies from the collection
     res.render('publicMovies', { title: 'Public Movie List', movies }); // Render the 'publicMovies.ejs' view
   } catch (err) {
     console.error(err);
-    res.status(500).send('Error fetching movies.');
+    res.render('error', {
+      message: 'Error fetching public movies',
+      error: err,
+    });
   }
 };
