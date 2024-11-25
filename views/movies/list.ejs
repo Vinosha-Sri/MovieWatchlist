@@ -1,0 +1,41 @@
+<%- include('partials/header') %>
+
+<main class="container">
+  <div class="row">
+    <div class="offset-md-1 col-md-10">
+      <h1><%= title %></h1>
+      <a href="/movies/add" class="btn btn-primary" role="button">Add Movie</a>
+      <br>
+      <table class="table table-bordered table-striped table-hover">
+        <thead>
+          <tr class="d-flex">
+            <th class="text-center col-3">Title</th>
+            <th class="text-center col-2">Genre</th>
+            <th class="text-center col-2">Year</th>
+            <th class="text-center col-2">Status</th>
+            <th class="text-center col-1">Edit</th>
+            <th class="text-center col-1">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for(let count=0; count<MovieList.length; count++) { %>
+          <tr class="d-flex">
+            <td class="text-center col-3"><%= MovieList[count].title %></td>
+            <td class="text-center col-2"><%= MovieList[count].genre %></td>
+            <td class="text-center col-2"><%= MovieList[count].year %></td>
+            <td class="text-center col-2"><%= MovieList[count].status %></td>
+            <td class="text-center col-1">
+              <a href="/movies/edit/<%= MovieList[count]._id %>" class="btn btn-primary btn-sm">Edit</a>
+            </td>
+            <td class="text-center col-1">
+              <a href="/movies/delete/<%= MovieList[count]._id %>" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<%- include('partials/footer') %>

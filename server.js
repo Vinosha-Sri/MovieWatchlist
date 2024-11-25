@@ -1,64 +1,57 @@
-const express = require("express");
-const expressLayouts = require("express-ejs-layouts");
-const mongoose = require("mongoose");
-require("dotenv").config(); // Load environment variables
+const express = require('express');
+const path = require('path');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const mongoose = require('mongoose');
 
-// Debugging: Log the MongoDB URI to verify it is being loaded correctly
-console.log("MongoDB URI:", process.env.MONGODB_URI);
+// Import Routes
+const indexRouter = require('./routes/index');
 
-const connectDB = require("./config/database"); 
-const app = express(); 
+// Import MongoDB URI
+const dbConfig = require('./config/database');
+
+// Initialize Express App
+const app = express();
+
+// Database Connection
+mongoose
+  .connect(dbConfig.URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log('MongoDB Connected Successfully!'))
+  .catch((err) => console.error('Connection Error:', err.message));
 
 // Middleware
-app.use(expressLayouts); 
-app.use(express.static("public")); 
-app.use(express.urlencoded({ extended: true }));
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 
-// View Engine
-app.set("view engine", "ejs");
-app.set("layout", "layout"); 
+// View Engine Setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
-// Connect to MongoDB
-connectDB();
+// Use Routes
+app.use('/', indexRouter);
 
-// Define the Movie model
-const Movie = mongoose.model("Movie", {
-  title: String,
-  genre: String,
-  year: Number,
-  status: String,
+// Error Handling for 404
+app.use((req, res, next) => {
+  const error = new Error('Not Found');
+  error.status = 404;
+  next(error);
 });
 
-// Insert a sample movie
-const createSampleMovie = async () => {
-  try {
-    const sampleMovie = new Movie({
-      title: "Inception",
-      genre: "Sci-Fi",
-      year: 2010,
-      status: "Watched",
-    });
-    await sampleMovie.save();
-    console.log("Sample movie added to the database!");
-  } catch (err) {
-    console.error("Error adding sample movie:", err.message);
-  }
-};
-
-// Call the function to insert a sample movie
-createSampleMovie();
-
-// Routes
-app.get("/", async (req, res) => {
-  const movies = await Movie.find();
-  res.render("index", { movies }); // Render 'index.ejs' content within 'layout.ejs'
+// General Error Handling
+app.use((err, req, res, next) => {
+  res.status(err.status || 500);
+  res.render('error', { message: err.message, error: err });
 });
 
-app.get("/movies/new", (req, res) => {
-  res.render("addmovie"); // Render 'addmovie.ejs'
-});
-
-// Start the server
+// Start Server
 app.listen(3000, () => {
-  console.log("Server is running on http://localhost:3000");
+  console.log('Server is running on http://localhost:3000');
 });
+
+module.exports = app;

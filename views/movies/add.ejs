@@ -1,0 +1,40 @@
+<%- include('partials/header') %>
+
+<!-- Add Movie Form -->
+<div class="container">
+  <div class="row">
+    <div class="offset-md-3 col-md-6">
+      <h1><%= title %></h1>
+
+      <form class="form" method="POST">
+        <div class="form-group">
+          <label for="titleTextField">Movie Title</label>
+          <input type="text" class="form-control" id="titleTextField" placeholder="Enter the Movie Title" name="title" required>
+        </div>
+
+        <div class="form-group">
+          <label for="genreTextField">Genre</label>
+          <input type="text" class="form-control" id="genreTextField" placeholder="Enter the Movie Genre" name="genre" required>
+        </div>
+
+        <div class="form-group">
+          <label for="yearTextField">Release Year</label>
+          <input type="number" class="form-control" id="yearTextField" placeholder="Enter the Release Year (e.g., 2023)" name="year" required>
+        </div>
+
+        <div class="form-group">
+          <label for="statusSelect">Status</label>
+          <select class="form-control" id="statusSelect" name="status" required>
+            <option value="Watched">Watched</option>
+            <option value="Not Watched">Not Watched</option>
+          </select>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Submit</button>
+        <a href="/movies" class="btn btn-warning">Cancel</a>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

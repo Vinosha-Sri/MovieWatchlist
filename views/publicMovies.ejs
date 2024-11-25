@@ -1,0 +1,31 @@
+<%- include('partials/header') %>
+
+<div class="container">
+  <h1>Public Movie List</h1>
+  <% if (movies.length > 0) { %>
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Genre</th>
+          <th>Year</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% movies.forEach(movie => { %>
+          <tr>
+            <td><%= movie.title %></td>
+            <td><%= movie.genre %></td>
+            <td><%= movie.year %></td>
+            <td><%= movie.status %></td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <p>No movies found in the collection.</p>
+  <% } %>
+</div>
+
+<%- include('partials/footer') %>

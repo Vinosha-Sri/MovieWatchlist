@@ -1,0 +1,56 @@
+<%- include('partials/header') %>
+
+
+<!-- Content for the Add/Edit Movie Page -->
+<div class="container">
+  <div class="row">
+    <div class="offset-md-3 col-md-6">
+      <h1><%= title %></h1>
+
+      <form class="form" method="POST">
+        <div class="form-group">
+          <label for="titleTextField">Movie Title</label>
+          <input type="text" class="form-control"
+          id="titleTextField"
+          placeholder="Enter the Movie Title"
+          name="title"
+          value="<%= Movie.title %>"
+          required>
+        </div>
+
+        <div class="form-group">
+          <label for="genreTextField">Genre</label>
+          <input type="text" class="form-control"
+          id="genreTextField"
+          placeholder="Enter the Genre of the Movie"
+          name="genre"
+          value="<%= Movie.genre %>"
+          required>
+        </div>
+
+        <div class="form-group">
+          <label for="yearTextField">Release Year</label>
+          <input type="number" class="form-control"
+          id="yearTextField"
+          placeholder="Enter the Release Year"
+          name="year"
+          value="<%= Movie.year %>"
+          required>
+        </div>
+
+        <div class="form-group">
+          <label for="statusSelect">Status</label>
+          <select class="form-control" id="statusSelect" name="status" required>
+            <option value="Watched" <%= Movie.status === "Watched" ? "selected" : "" %>>Watched</option>
+            <option value="Not Watched" <%= Movie.status === "Not Watched" ? "selected" : "" %>>Not Watched</option>
+          </select>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Submit</button>
+        <a href="/movies" class="btn btn-warning">Cancel</a>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') %>
